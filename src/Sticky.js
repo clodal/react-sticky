@@ -12,7 +12,7 @@ export default class Sticky extends Component {
     bottomAnchor: PropTypes.bool,
     mobileStyle: PropTypes.shape({
       width: PropTypes.number.isRequired,
-      style: PropTypes.string.isRequired,
+      prop: PropTypes.string.isRequired,
     }),
   };
 
@@ -149,9 +149,9 @@ export default class Sticky extends Component {
     let style = !isSticky ? {} : { ...baseStickyStyle, ...stickyStyle };
 
     if (this.props.mobileStyle) {
-      const isMobileView = windowWidth <= this.props.mobileStyle.width
-      if (isMobileView) {
-        style = { ...baseStickyStyle, ...stickyStyles[`${this.props.mobileStyle.style}Style`] }
+      const isMobile = windowWidth <= this.props.mobileStyle.width
+      if (isMobile) {
+        style = { ...baseStickyStyle, ...stickyStyles[`${this.props.mobileStyle.prop}Style`] }
       }
     }
 

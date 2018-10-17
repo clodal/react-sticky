@@ -27,7 +27,7 @@ export class Aside extends PureComponent {
               </div>
             </div>
             <div className='col col-sm-4'>
-              <Sticky topOffset={32} mobileStyle={{ width: 768, style: 'bottomAnchor' }}>
+              <Sticky mobileStyle={{ width: 768, prop: 'bottomAnchor' }}>
                 {({ style }) => (
                   <Header style={style} renderCount={renderCount++} />
                 )}

@@ -4,6 +4,7 @@ import { HashRouter as Router, Route, Redirect } from "react-router-dom";
 import { Basic } from "./basic/basic";
 import { Relative } from "./relative/relative";
 import { Stacked } from "./stacked/stacked";
+import { Footer } from "./footer/footer";
 import { Navbar } from "./navbar";
 import styles from "./styles";
 
@@ -17,6 +18,7 @@ ReactDOM.render(
         <Route path="/basic" component={Basic} />
         <Route path="/relative" component={Relative} />
         <Route path="/stacked" component={Stacked} />
+        <Route path="/footer" component={Footer} />
       </div>
     </div>
   </Router>,

@@ -16,6 +16,9 @@ export class Navbar extends React.Component {
           <li className="nav-link">
             <Link to="/stacked">Stacked</Link>
           </li>
+          <li className="nav-link">
+            <Link to="/footer">Footer</Link>
+          </li>
         </ul>
       </div>
     );

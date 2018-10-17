@@ -78,11 +78,6 @@ h2 {
   margin: 0 10px;
 }
 
-.row {
-  display: flex;
-  flex-direction: row;
-}
-
 .sidebar {
   flex-shrink: 0;
   width: 100px;
@@ -98,6 +93,44 @@ h2 {
   display: flex;
   flex: 1 1 auto;
   height: 100vh;
+}
+
+.row-no-wrap {
+  display: flex;
+  flex-direction: row;
+}
+
+.row {
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .row {
+    flex-direction: unset;  
+  }
+}
+
+.col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .col-sm-4 {
+    flex: 0 0 calc(100% / 12 * 4);
+    max-width: calc(100% / 12 * 4);
+  }  
+}
+
+@media (min-width: 768px) {
+  .col-sm-8 {
+    flex: 0 0 calc(100% / 12 * 8);
+    max-width: calc(100% / 12 * 8);
+  }  
 }
 
 `;

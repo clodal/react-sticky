@@ -16,7 +16,7 @@ export class Capture extends PureComponent {
           <h1>Within a scrolling container</h1>
           <div className="gap short" />
           <StickyContainer capture={true}>
-            <div className="row">
+            <div className="row-no-wrap">
               <div className="column">
                 <p>
                   Nunc consectetur placerat sem, rutrum pretium neque fringilla

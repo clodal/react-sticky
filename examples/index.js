@@ -6,6 +6,8 @@ import { Relative } from "./relative";
 import { Stacked } from "./stacked";
 import { Capture } from "./capture";
 import { Navbar } from "./navbar";
+import { Footer } from "./footer";
+import { Aside } from "./aside";
 import styles from "./styles";
 
 ReactDOM.render(
@@ -19,6 +21,8 @@ ReactDOM.render(
         <Route path="/relative" component={Relative} />
         <Route path="/stacked" component={Stacked} />
         <Route path="/capture" component={Capture} />
+        <Route path="/footer" component={Footer} />
+        <Route path="/aside" component={Aside} />
       </div>
     </div>
   </Router>,

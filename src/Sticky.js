@@ -9,7 +9,11 @@ export default class Sticky extends Component {
     relative: PropTypes.bool,
     children: PropTypes.func.isRequired,
     bottom: PropTypes.bool,
-    bottomAnchor: PropTypes.bool
+    bottomAnchor: PropTypes.bool,
+    mobileStyle: PropTypes.shape({
+      width: PropTypes.number.isRequired,
+      style: PropTypes.string.isRequired,
+    }),
   };
 
   static defaultProps = {
@@ -19,7 +23,8 @@ export default class Sticky extends Component {
     disableCompensation: false,
     disableHardwareAcceleration: false,
     bottom: false,
-    bottomAnchor: false
+    bottomAnchor: false,
+    mobileStyle: undefined,
   };
 
   static contextTypes = {
@@ -92,45 +97,59 @@ export default class Sticky extends Component {
         ? parent.scrollHeight - parent.scrollTop
         : distanceFromBottom) - calculatedHeight;
 
+
+    const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
     const baseStickyStyle = {
       position: "fixed",
       left: placeholderClientRect.left,
       width: placeholderClientRect.width,
     }
-    const topStickyStyle = {
-      top:
-        bottomDifference > 0
-          ? this.props.relative
+    const stickyStyles = {
+      topStickyStyle: {
+        top:
+          bottomDifference > 0
+            ? this.props.relative
             ? parent.offsetTop - parent.offsetParent.scrollTop
             : 0
-          : bottomDifference,
-    };
-    const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-    const bottomStickyStyle = {
-      bottom:
-        bottomDifference - windowHeight > 0
-          ? this.props.relative
+            : bottomDifference,
+      },
+      bottomStickyStyle: {
+        bottom:
+          bottomDifference - windowHeight > 0
+            ? this.props.relative
             ? parent.offsetTop - parent.offsetParent.scrollTop
             : 0
-          : bottomDifference - windowHeight,
-    };
-    const bottomAnchorStyle = {
-      bottom:
-        bottomDifference - windowHeight + calculatedHeight > 0
-          ? this.props.relative
+            : bottomDifference - windowHeight,
+      },
+      bottomAnchorStyle: {
+        bottom:
+          bottomDifference - windowHeight + calculatedHeight > 0
+            ? this.props.relative
             ? parent.offsetTop - parent.offsetParent.scrollTop
             : 0
-          : -(bottomDifference - windowHeight) - calculatedHeight,
+            : -(bottomDifference - windowHeight) - calculatedHeight,
+      },
     }
 
-    const isBottomAnchor = this.props.bottomAnchor
-    const isBottom = this.props.bottom
+    const isBottomAnchor = this.props.bottomAnchor;
+    const isBottom = this.props.bottom;
     const getBottomStyle = () => {
-      if (isBottom) return bottomStickyStyle;
-      if (isBottomAnchor) return bottomAnchorStyle;
+      if (isBottom) return stickyStyles.bottomStickyStyle;
+      if (isBottomAnchor) return stickyStyles.bottomAnchorStyle;
     }
-    const stickyStyle = (isBottom || isBottomAnchor) ? getBottomStyle() : topStickyStyle
-    const style = !isSticky ? {} : { ...baseStickyStyle, ...stickyStyle };
+
+    const stickyStyle = (isBottom || isBottomAnchor) ? getBottomStyle() : stickyStyles.topStickyStyle;
+
+    let style = !isSticky ? {} : { ...baseStickyStyle, ...stickyStyle };
+
+    if (this.props.mobileStyle) {
+      const isMobileView = windowWidth <= this.props.mobileStyle.width
+      if (isMobileView) {
+        style = { ...baseStickyStyle, ...stickyStyles[`${this.props.mobileStyle.style}Style`] }
+      }
+    }
 
     if (!this.props.disableHardwareAcceleration) {
       style.transform = "translateZ(0)";

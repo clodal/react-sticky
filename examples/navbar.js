@@ -19,6 +19,9 @@ export class Navbar extends React.Component {
           <li className="nav-link">
             <Link to="/footer">Footer</Link>
           </li>
+          <li className="nav-link">
+            <Link to="/aside">Aside</Link>
+          </li>
         </ul>
       </div>
     );

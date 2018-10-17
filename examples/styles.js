@@ -71,4 +71,39 @@ h2 {
 .container.relative {
   overflow-y: auto;
 }
+
+.row {
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .row {
+    flex-direction: unset;  
+  }
+}
+
+
+.col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .col-sm-4 {
+    flex: 0 0 calc(100% / 12 * 4);
+    max-width: calc(100% / 12 * 4);
+  }  
+}
+
+@media (min-width: 768px) {
+  .col-sm-8 {
+    flex: 0 0 calc(100% / 12 * 8);
+    max-width: calc(100% / 12 * 8);
+  }  
+}
+
 `;

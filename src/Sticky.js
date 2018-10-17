@@ -8,7 +8,8 @@ export default class Sticky extends Component {
     bottomOffset: PropTypes.number,
     relative: PropTypes.bool,
     children: PropTypes.func.isRequired,
-    bottom: PropTypes.bool
+    bottom: PropTypes.bool,
+    bottomAnchor: PropTypes.bool
   };
 
   static defaultProps = {
@@ -17,7 +18,8 @@ export default class Sticky extends Component {
     bottomOffset: 0,
     disableCompensation: false,
     disableHardwareAcceleration: false,
-    bottom: false
+    bottom: false,
+    bottomAnchor: false
   };
 
   static contextTypes = {
@@ -112,10 +114,23 @@ export default class Sticky extends Component {
             : 0
           : bottomDifference - windowHeight,
     };
+    const bottomAnchorStyle = {
+      bottom:
+        bottomDifference - windowHeight + calculatedHeight > 0
+          ? this.props.relative
+            ? parent.offsetTop - parent.offsetParent.scrollTop
+            : 0
+          : -(bottomDifference - windowHeight) - calculatedHeight,
+    }
 
+    const isBottomAnchor = this.props.bottomAnchor
     const isBottom = this.props.bottom
-    const stickyStyle = isBottom ? bottomStickyStyle : topStickyStyle
-    const style = !isSticky ? {} : {...baseStickyStyle, ...stickyStyle};
+    const getBottomStyle = () => {
+      if (isBottom) return bottomStickyStyle;
+      if (isBottomAnchor) return bottomAnchorStyle;
+    }
+    const stickyStyle = (isBottom || isBottomAnchor) ? getBottomStyle() : topStickyStyle
+    const style = !isSticky ? {} : { ...baseStickyStyle, ...stickyStyle };
 
     if (!this.props.disableHardwareAcceleration) {
       style.transform = "translateZ(0)";

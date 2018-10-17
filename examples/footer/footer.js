@@ -10,7 +10,7 @@ export class Footer extends PureComponent {
     return (
       <div>
         <StickyContainer style={{ position: 'relative', height: 2000, background: 'green' }}>
-          <Sticky bottom>
+          <Sticky bottomAnchor>
             {({ style }) => (
               <Header style={style} renderCount={renderCount++} />
             )}
